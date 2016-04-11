@@ -10,11 +10,32 @@ import Queue
 def main():
 
     image1 = Image.open("newImage3.png").convert("1") # convert to bilevel from RGB
+    #print str(list(image1.getdata()))
+
 
     shapes = connectedComponentLabeling(image1)
 
+
+    im = Image.new("1", image1.size, "white")
+    #im.putdata(list(image1.getdata()))
+    counter = 1
+
     for shape in shapes:
-        print shape
+        im = Image.new("1", image1.size, "white")
+        for pixel in shape:
+            im.putpixel(pixel, 0)
+        im.save("image" + str(counter) + ".png", "png")
+        counter += 1
+
+    #im.save("imageClone.png", "png")
+
+    # list_of_pixels = list(im.getdata())
+    # # Do something to the pixels...
+    # im2 = Image.new(im.mode, im.size)
+    # im2.putdata(list_of_pixels)
+
+    # for shape in shapes:
+    #     print shape
 
 
 # return a list of connected components in an image
