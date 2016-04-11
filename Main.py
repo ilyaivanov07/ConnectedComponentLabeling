@@ -5,37 +5,17 @@ import math, operator
 import sys
 import Queue
 
-
-
 def main():
 
     image1 = Image.open("newImage3.png").convert("1") # convert to bilevel from RGB
-    #print str(list(image1.getdata()))
-
-
-    shapes = connectedComponentLabeling(image1)
-
-
-    im = Image.new("1", image1.size, "white")
-    #im.putdata(list(image1.getdata()))
-    counter = 1
-
-    for shape in shapes:
-        im = Image.new("1", image1.size, "white")
-        for pixel in shape:
-            im.putpixel(pixel, 0)
-        im.save("image" + str(counter) + ".png", "png")
-        counter += 1
-
-    #im.save("imageClone.png", "png")
-
-    # list_of_pixels = list(im.getdata())
-    # # Do something to the pixels...
-    # im2 = Image.new(im.mode, im.size)
-    # im2.putdata(list_of_pixels)
-
+    # shapes = connectedComponentLabeling(image1)
+    # counter = 1
     # for shape in shapes:
-    #     print shape
+    #     im = Image.new("1", image1.size, "white")
+    #     for pixel in shape:
+    #         im.putpixel(pixel, 0)
+    #     im.save("image" + str(counter) + ".png", "png")
+    #     counter += 1
 
 
 # return a list of connected components in an image
@@ -48,20 +28,16 @@ def connectedComponentLabeling(image):
     while (len(setOfPoints) > 0):
         # get and pop point from set
         node = setOfPoints.pop()
-        # print node
         # put into queue
         q.put(node)
         # create empty set
         shape = set()
-
         while (not q.empty()):
             point = q.get()
             getNeighboringPoints(point, setOfPoints, q)
             shape.add(point)
 
         shapes.append(shape)
-
-    # print len(shapes)
     return shapes
 
 def getNeighboringPoints(point, setOfPoints, queue):
